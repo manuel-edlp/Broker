@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-
+using Broker.Dtos;
 
 namespace Broker.Services
 {
@@ -42,6 +42,18 @@ namespace Broker.Services
             await _context.SaveChangesAsync();
 
             return cuenta.cuentaId;
+        }
+
+        public async Task<CuentaDto> buscarCuenta(double numero)
+        {
+            // Realiza la búsqueda de transaccion por numero
+            var cuenta = await _context.Cuenta
+
+               .FirstOrDefaultAsync(c => c.numero == numero);
+
+            var cuentaDto = _mapper.Map<CuentaDto>(cuenta);
+
+            return cuentaDto;
         }
     }
 }

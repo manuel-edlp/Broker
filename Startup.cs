@@ -37,6 +37,19 @@ namespace Broker
                 CreateMap<BancoDtoAgregar, Banco>()
                     .ForMember(dest => dest.estado, opt => opt.Ignore()) // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
                     .ForMember(dest => dest.cuenta, opt => opt.Ignore());
+
+
+                //
+                CreateMap<Transaccion, TransaccionDto>()
+                    .ForMember(dto => dto.cuentaOrigen, opt => opt.MapFrom(src => src.cuentaOrigen.numero))
+                    .ForMember(dto => dto.cuentaDestino, opt => opt.MapFrom(src => src.cuentaDestino.numero));
+
+                CreateMap<TransaccionDto, Transaccion>()
+                    .ForMember(dest => dest.cuentaOrigen, opt => opt.Ignore()) // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
+                    .ForMember(dest => dest.cuentaDestino, opt => opt.Ignore());
+                CreateMap<TransaccionDtoAgregar, Transaccion>()
+                    .ForMember(dest => dest.cuentaOrigen, opt => opt.Ignore()) // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
+                    .ForMember(dest => dest.cuentaDestino, opt => opt.Ignore());
             }
         }
         // This method gets called by the runtime. Use this method to add services to the container.
