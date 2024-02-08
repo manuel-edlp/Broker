@@ -36,6 +36,9 @@ namespace Broker.Services
             return cuentas;
         }
 
+        // Falta agregar acá y en el controller Transaccion una funcion que liste movimientos de transacciones por fecha por banco
+        // Hay pensar si las ponemos en Banco o en Transaccion.
+
         public async Task<bool> agregarTransaccion(TransaccionDtoAgregar transaccionDto)
         {
             try
@@ -52,6 +55,7 @@ namespace Broker.Services
                 transaccion.estadoId = 1; // seteo estado pendiente por defoult
 
                 //estrategia: recibir origen y destino, enviarselos al renaper para verificar.
+                // verificamos nosotros que exista el banco
                 // Si recibo Okey persisto las cuentas y acepto transaccion.
                 // En caso contrario no persisto las cuentas y rechazo transferencia.
 
@@ -59,7 +63,9 @@ namespace Broker.Services
                 // cuentaDestino = await _httpClient.GetAsync(apiUrl/destino);
 
                 // en caso de no estar validadas rechazo
-                if (cuentaOrigen == null || cuentaDestino == null)
+                var cuentaOrige=1;
+                var cuentaDestin=1;
+                if (cuentaOrige == null || cuentaDestin == null)
                 {
                     transaccion.estadoId = 3;  // cambio estado a rechazada
                     return false;
@@ -84,6 +90,12 @@ namespace Broker.Services
                     // guardo id de la cuenta origen, en la transaccion
                     transaccion.cuentaOrigenId = cuentaOrigen.id;
                     transaccion.cuentaDestinoId = cuentaDestino.id;
+                    
+                    // Falta validar que el banco exista en nuestra BD
+
+                    // Falta validar con el Renaper los tituler de las cuentas. Haciendo una request al sistema del renaper
+                    // donde le pasamos el dni de los titulares de cuenta origen y destino.
+
                     transaccion.estadoId = 3; // seteo estado aceptada
 
 
