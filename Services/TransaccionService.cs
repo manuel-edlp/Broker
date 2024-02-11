@@ -74,8 +74,8 @@ namespace Broker.Services
                 }
 
                 // consulto al endpoint del Renaper la validez de los Dni (falta insertar endpoint)
-                bool esValidoDniOrigen = await _httpClient.GetAsync(apiUrl/);
-                bool esValidoDniDestino = await _httpClient.GetAsync(apiUrl/);
+                bool esValidoDniOrigen = true;// await _httpClient.GetAsync(apiUrl/);
+                bool esValidoDniDestino = true;//await _httpClient.GetAsync(apiUrl/);
 
                 if (esValidoDniOrigen == false || esValidoDniDestino == false)
                 {
@@ -125,13 +125,13 @@ namespace Broker.Services
 
                     if (cuentaOrigen == null) // si no las tengo registradas las registro
                     {
-                        await _cuentaService.agregarCuenta(int.Parse(cuentaOrigen));
+                        await _cuentaService.agregarCuenta(int.Parse(cuentaOrigen),transaccionDto.cbuOrigen);
                         // guardo id de la cuenta origen, en la transaccion
                         transaccion.cuentaOrigenId = cuentaOrigenBd.id;
                     }
                     if (cuentaDestino == null)
                     {
-                        await _cuentaService.agregarCuenta(int.Parse(cuentaDestino));
+                        await _cuentaService.agregarCuenta(int.Parse(cuentaDestino), transaccionDto.cbuDestino);
                         // guardo id de la cuenta destino, en la transaccion
                         transaccion.cuentaDestinoId = cuentaDestinoBd.id;
                     }

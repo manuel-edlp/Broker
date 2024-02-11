@@ -25,7 +25,7 @@ namespace Broker.Controllers
             return transacciones;
         }
 
-        [HttpGet("listar")] // Listar transacciones por fecha
+        [HttpGet("listarPorFecha")] // Listar transacciones por fecha
         public async Task<IEnumerable<Transaccion>> listarTransaccionesPorFecha()
         {
             var transacciones = await _transaccionService.listarTransaccionesPorFecha();
@@ -34,14 +34,14 @@ namespace Broker.Controllers
         }
 
         [HttpPost] // agrega transaccion
-        public async Task<IActionResult> agregarTransaccion([FromBody] TransaccionDtoAgregar transaccion)
+        public async Task<IActionResult> agregarTransaccion([FromBody] TransaccionDtoAgregar transaccion, int dniOrigen, int dniDestino)
         {
             if (transaccion == null)
             {
                 return BadRequest("Los datos de la transaccion no son válidos.");
             }
 
-            if (await _transaccionService.agregarTransaccion(transaccion))
+            if (await _transaccionService.agregarTransaccion(transaccion,dniOrigen,dniDestino))
             {
 
                 // Devuelvo una respuesta de éxito con el código de estado 201 (Created)

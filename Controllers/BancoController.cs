@@ -30,14 +30,14 @@ namespace Broker.Controllers
 
         [HttpPost] // agrega banco
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(BancoDtoAgregar))]
-        public async Task<IActionResult>agregarBanco([FromBody] BancoDtoAgregar banco)
+        public async Task<IActionResult>agregarBanco([FromBody] BancoDtoAgregar banco, string cbu)
         {
             if (banco == null)
             {
                 return BadRequest("Los datos del banco no son válidos.");
             }
 
-            if (await _bancoService.agregarBanco(banco))
+            if (await _bancoService.agregarBanco(banco,cbu))
             {
 
                 // Devuelvo una respuesta de éxito con el código de estado 201 (Created)

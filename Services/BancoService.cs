@@ -52,7 +52,7 @@ namespace Broker.Services
             return bancoDto;
         }
 
-        public async Task<bool> agregarBanco(BancoDtoAgregar bancodto)
+        public async Task<bool> agregarBanco(BancoDtoAgregar bancodto, string cbu)
         {
             
             try
@@ -77,7 +77,7 @@ namespace Broker.Services
                 // envio request para crear cuenta, me retorna su id
                 var numeroCuenta = bancodto.cuenta;
 
-                var cuentaId = await _cuentaService.agregarCuenta(numeroCuenta);
+                var cuentaId = await _cuentaService.agregarCuenta(numeroCuenta, cbu);
 
           
 

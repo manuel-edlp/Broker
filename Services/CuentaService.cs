@@ -32,10 +32,11 @@ namespace Broker.Services
             return cuentas;
         }
 
-        public async Task<int> agregarCuenta(long numero)
+        public async Task<int> agregarCuenta(long numero, string cbu)
         {
             var cuenta = new Cuenta();
             cuenta.numero = numero;
+            cuenta.cbu = cbu;
 
             _context.Cuenta.Add(cuenta);
 
