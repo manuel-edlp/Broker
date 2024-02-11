@@ -39,5 +39,6 @@ namespace Broker.Models
         public int cuentaDestinoId { get; set; }
         public virtual Cuenta cuentaDestino { get; set; }
 
+
     }
 }

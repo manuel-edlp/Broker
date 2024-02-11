@@ -40,9 +40,9 @@ namespace Broker
 
 
                 //
-                CreateMap<Transaccion, TransaccionDto>()
-                    .ForMember(dto => dto.cuentaOrigen, opt => opt.MapFrom(src => src.cuentaOrigen.numero))
-                    .ForMember(dto => dto.cuentaDestino, opt => opt.MapFrom(src => src.cuentaDestino.numero));
+                //CreateMap<Transaccion, TransaccionDto>()
+                //    .ForMember(dto => dto.cuentaOrigen, opt => opt.MapFrom(src => src.cuentaOrigen.numero))
+                //    .ForMember(dto => dto.cuentaDestino, opt => opt.MapFrom(src => src.cuentaDestino.numero));
 
                 CreateMap<TransaccionDto, Transaccion>()
                     .ForMember(dest => dest.cuentaOrigen, opt => opt.Ignore()) // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework

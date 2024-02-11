@@ -11,8 +11,10 @@ namespace Broker.Dtos
         public String tipo { get; set; }
         public String estado { get; set; }
         public float monto { get; set; }
-        public double cuentaOrigen { get; set; }
-        public double cuentaDestino { get; set; }
+        public string cbuOrigen { get; set; }
+        public string cbuDestino { get; set; }
+
+
 
     }
 }

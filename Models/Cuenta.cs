@@ -11,5 +11,10 @@ namespace Broker.Models
 
         [Required]
         public long numero { get; set; }
+
+        [Required]
+        public string cbu { get; set; }
+
+
     }
 }

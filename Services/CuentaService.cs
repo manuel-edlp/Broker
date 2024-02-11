@@ -44,7 +44,7 @@ namespace Broker.Services
             return cuenta.cuentaId;
         }
 
-        public async Task<CuentaDto> buscarCuenta(double numero)
+        public async Task<CuentaDto> buscarCuenta(long numero)
         {
             // Realiza la búsqueda de transaccion por numero
             var cuenta = await _context.Cuenta

@@ -38,6 +38,19 @@ namespace Broker.Services
             // Devuelve la lista de Bancos
             return bancosdto;
         }
+        public async Task<IEnumerable<BancoDto>> buscarBanco(int numero)
+        {
+            // Realiza una consulta a la base de datos para buscar Banco por numero
+            var banco = await _context.Banco
+            .Where(b => b.numero == numero)
+            .Include(b => b.estado)
+            .Include(b => b.cuenta)
+            .FirstOrDefaultAsync();
+
+            var bancoDto = _mapper.Map<IEnumerable<BancoDto>>(banco);
+            // Devuelve la lista de Bancos
+            return bancoDto;
+        }
 
         public async Task<bool> agregarBanco(BancoDtoAgregar bancodto)
         {

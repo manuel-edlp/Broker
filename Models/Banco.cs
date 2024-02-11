@@ -25,6 +25,9 @@ namespace Broker.Models
         [ForeignKey("cuentaId")]
         public int cuentaId { get; set; }
 
+        [Required]
+        public int numero { get; set; }
+
         public virtual Cuenta cuenta { get; set; }
     }
 }

@@ -20,9 +20,17 @@ namespace Broker.Controllers
         [HttpGet("listar")] // Listar transacciones
         public async Task<IEnumerable<Transaccion>> listarTransacciones()
         {
-            var resultados = await _transaccionService.listarTransacciones();
+            var transacciones = await _transaccionService.listarTransacciones();
 
-            return resultados;
+            return transacciones;
+        }
+
+        [HttpGet("listar")] // Listar transacciones por fecha
+        public async Task<IEnumerable<Transaccion>> listarTransaccionesPorFecha()
+        {
+            var transacciones = await _transaccionService.listarTransaccionesPorFecha();
+
+            return transacciones;
         }
 
         [HttpPost] // agrega transaccion

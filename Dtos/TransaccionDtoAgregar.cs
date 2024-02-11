@@ -10,7 +10,7 @@ namespace Broker.Dtos
         public DateTime fechaHora { get; set; }
         public String tipo { get; set; }
         public float monto { get; set; }
-        public double cuentaOrigen { get; set; }
-        public double cuentaDestino { get; set; }
+        public string cbuOrigen { get; set; }
+        public string cbuDestino { get; set; }
     }
 }
