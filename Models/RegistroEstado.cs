@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Broker.Models
 {
-    public class Transaccion
+    public class RegistroEstado
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,25 +17,8 @@ namespace Broker.Models
         public DateTime fechaHora { get; set; }
 
         [Required]
-        public long numero { get; set; }
-
-        [Required]
-        [ForeignKey("tipo")]
-        public int idTipo { get; set; }
-        public virtual Tipo tipo { get; set; }
-
-        public float monto { get; set; }
-
-        [Required]
-        [ForeignKey("cuentaOrigen")]
-        public int idCuentaOrigen { get; set; }
-        public virtual Cuenta cuentaOrigen { get; set; }
-
-
-        [Required]
-        [ForeignKey("cuentaDestino")]
-        public int idCuentaDestino { get; set; }
-        public virtual Cuenta cuentaDestino { get; set; }
+        [MaxLength(200)]
+        public string descripcion { get; set; }
 
         [Required]
         [ForeignKey("aceptadoEstado")]
@@ -47,5 +30,9 @@ namespace Broker.Models
         public int idValidacionEstado { get; set; }
         public virtual ValidacionEstado validacionEstado { get; set; }
 
+        [Required]
+        [ForeignKey("transaccion")]
+        public int idTransaccion { get; set; }
+        public virtual Transaccion transaccion { get; set; }
     }
 }

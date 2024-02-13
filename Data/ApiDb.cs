@@ -17,9 +17,11 @@ namespace Broker.Data
         public DbSet<Banco> Banco => Set<Banco>();
         public DbSet<Cuenta> Cuenta => Set<Cuenta>();
         public DbSet<Transaccion> Transaccion => Set<Transaccion>();
-        public DbSet<EstadoBanco> EstadoBanco => Set<EstadoBanco>();
-        public DbSet<EstadoTransaccion> EstadoTransaccion => Set<EstadoTransaccion>();
-        public DbSet<TipoTransaccion> TipoTransaccion => Set<TipoTransaccion>();
+        public DbSet<BancoEstado> BancoEstado => Set<BancoEstado>();
+        public DbSet<AceptadoEstado> AceptadoEstado => Set<AceptadoEstado>();
+        public DbSet<ValidacionEstado> ValidacionEstado => Set<ValidacionEstado>();
+        public DbSet<RegistroEstado> RegistroEstado => Set<RegistroEstado>();
+        public DbSet<Tipo> Tipo => Set<Tipo>();
 
         
 

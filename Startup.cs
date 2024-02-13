@@ -28,15 +28,11 @@ namespace Broker
             public MappingProfile()
             {
                 CreateMap<Banco, BancoDto>()
-                    .ForMember(dto => dto.estado, opt => opt.MapFrom(src => src.estado.descripcion))
-                    .ForMember(dto => dto.cuenta, opt => opt.MapFrom(src => src.cuenta.numero));
-
+                    .ForMember(dto => dto.estado, opt => opt.MapFrom(src => src.estado.descripcion));
                 CreateMap<BancoDto, Banco>()
-                    .ForMember(dest => dest.estado, opt => opt.Ignore()) // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
-                    .ForMember(dest => dest.cuenta, opt => opt.Ignore());
+                    .ForMember(dest => dest.estado, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
                 CreateMap<BancoDtoAgregar, Banco>()
-                    .ForMember(dest => dest.estado, opt => opt.Ignore()) // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
-                    .ForMember(dest => dest.cuenta, opt => opt.Ignore());
+                    .ForMember(dest => dest.estado, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
 
 
                 //

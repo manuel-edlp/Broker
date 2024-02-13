@@ -15,15 +15,12 @@ namespace Broker.Services
     {
         private readonly ApiDb _context;
         private readonly IMapper _mapper;
-        private readonly CuentaService _cuentaService; 
 
-        public BancoService(IConfiguration configuration, IMapper mapper, ApiDb context, CuentaService cuentaService)
+        public BancoService(IConfiguration configuration, IMapper mapper, ApiDb context)
         {
             _context = context;
 
             _mapper = mapper;
-
-            _cuentaService = cuentaService;
 
         }
 
@@ -32,7 +29,6 @@ namespace Broker.Services
             // Realiza una consulta a la base de datos para devolver todos los Bancos
             var bancos = await _context.Banco
                 .Include(b => b.estado)
-                .Include(b => b.cuenta)
                 .ToListAsync();
             var bancosdto = _mapper.Map<IEnumerable<BancoDto>>(bancos);
             // Devuelve la lista de Bancos
@@ -44,17 +40,23 @@ namespace Broker.Services
             var banco = await _context.Banco
             .Where(b => b.numero == numero)
             .Include(b => b.estado)
-            .Include(b => b.cuenta)
             .FirstOrDefaultAsync();
 
             var bancoDto = _mapper.Map<IEnumerable<BancoDto>>(banco);
-            // Devuelve la lista de Bancos
-            return bancoDto;
+            
+            return bancoDto; // Devuelvo el banco
         }
-
+        public async Task<int> getIdBanco(int numero)
+        {
+            // Realiza una consulta a la base de datos para buscar Banco por numero
+            var banco = await _context.Banco
+            .Where(b => b.numero == numero)
+            .FirstOrDefaultAsync();
+            
+            return banco.id; // Devuelvo el banco
+        }
         public async Task<bool> agregarBanco(BancoDtoAgregar bancodto, string cbu)
         {
-            
             try
             {
                 if (bancodto == null)
@@ -62,27 +64,10 @@ namespace Broker.Services
                     return false;
                 }
 
-
-
                 var banco = new Banco();
-
                 banco.razonSocial = bancodto.razonSocial;
-
-                // estado:  1 para inactivo, 2 para activo
-                // guardo id del estado, en el banco
-                banco.estadoId = 2;
-
-                
-
-                // envio request para crear cuenta, me retorna su id
-                var numeroCuenta = bancodto.cuenta;
-
-                var cuentaId = await _cuentaService.agregarCuenta(numeroCuenta, cbu);
-
-          
-
-                // guardo id del estado, en el banco
-                 banco.cuentaId = cuentaId;
+                banco.idBancoEstado = 2; // seteo el estado ( 1 para inactivo, 2 para activo)
+                banco.numero = bancodto.numero;
 
                 // Agregar el Banco al contexto de la base de datos
                 _context.Banco.Add(banco);

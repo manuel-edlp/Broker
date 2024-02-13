@@ -8,7 +8,6 @@ namespace Broker.Dtos
     public class BancoDtoAgregar
     {
         public string razonSocial { get; set; }
-        public long cuenta { get; set; }
         public int numero { get; set; }
     }
 }

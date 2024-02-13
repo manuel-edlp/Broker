@@ -7,13 +7,19 @@ namespace Broker.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int cuentaId { get; set; }
+        public int id { get; set; }
 
         [Required]
         public long numero { get; set; }
 
         [Required]
         public string cbu { get; set; }
+
+        [Required]
+        [ForeignKey("banco")]
+        public int idBanco { get; set; }
+
+        public virtual Banco banco { get; set; }
 
 
     }

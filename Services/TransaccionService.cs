@@ -107,14 +107,18 @@ namespace Broker.Services
 
                 var transaccion = new Transaccion();// creo Transaccion
              
+                // validacionEstados: (1: validando bancos, 2: validando DNI, 3: validacion exitosa, 4: validacion rechazada)
+                transaccion.idValidacionEstado = 1; // seteo estado validando bancos
 
-                transaccion.estadoId = 1; // seteo estado pendiente por defoult (estados: 1.pendiente  2.aceptada 3.rechazada)
+                // problema: tenemos que cambiar el estado de la transacción dentro de la funcion validarTransaccion y no dentro de esta funcion
+                // hay que pasar de alguna manera el objeto transacción a la funcion validar para poder cambiarle el estado a la transaccion y se pueda ver el proceso de que 
+                // cosas se estan validando
 
                 bool validacion= await validarTransaccion(transaccionDto, dniOrigen, dniDestino);
 
                 if (validacion == true)
                 {
-                    transaccion.estadoId = 2; // seteo transaccion como aceptada
+                    transaccion.idValidacionEstado = 3; // seteo transaccion como aceptada
 
                     var cuentaOrigen = transaccionDto.cbuOrigen.Substring(11, 21);
                     var cuentaDestino = transaccionDto.cbuDestino.Substring(11, 21);
@@ -127,13 +131,13 @@ namespace Broker.Services
                     {
                         await _cuentaService.agregarCuenta(int.Parse(cuentaOrigen),transaccionDto.cbuOrigen);
                         // guardo id de la cuenta origen, en la transaccion
-                        transaccion.cuentaOrigenId = cuentaOrigenBd.id;
+                        transaccion.idCuentaOrigen = cuentaOrigenBd.id;
                     }
                     if (cuentaDestino == null)
                     {
                         await _cuentaService.agregarCuenta(int.Parse(cuentaDestino), transaccionDto.cbuDestino);
                         // guardo id de la cuenta destino, en la transaccion
-                        transaccion.cuentaDestinoId = cuentaDestinoBd.id;
+                        transaccion.idCuentaDestino = cuentaDestinoBd.id;
                     }
                     
                     transaccion.monto = transaccionDto.monto;
@@ -153,8 +157,10 @@ namespace Broker.Services
 
                     
                 }
-                // si no cumple la validación seteo estado rechazada  ¿debo guardar las transacciones con estado rechazado?
-                transaccion.estadoId = 3;
+                // si no cumple la validación seteo estado rechazada 
+                transaccion.idValidacionEstado = 3;
+
+                // Falta guardar la transaccion rechazada, acá solo le cambie el estado, pero hay que guardarle la info y agregarla a la bd
                 return false;
 
                 
@@ -166,5 +172,4 @@ namespace Broker.Services
         }
     }
 }
-
 
